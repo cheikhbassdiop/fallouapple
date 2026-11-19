@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <!-- Nécessaire pour que le site s'adapte aux téléphones et tablettes -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>FALOUAPPLE - Produits et stock</title>
+
+  <!-- Polices Google (si hors-ligne, le site utilise la police du système) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Feuille de style du site -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <div class="app">
+
+    <!-- ===== BARRE DE NAVIGATION (identique sur toutes les pages) ===== -->
+    <header class="navbar">
+
+      <!-- Logo -->
+      <div class="logo">
+        <div class="logo-icon">FA</div>
+        <div>
+          <h2>FALOUAPPLE</h2>
+          <small>GESTION</small>
+        </div>
+      </div>
+
+      <!-- Bouton hamburger (visible seulement sur téléphone) -->
+      <button class="menu-toggle" id="menuToggle" type="button"
+              aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="menu">☰</button>
+
+      <!-- Liens du menu -->
+      <nav class="menu" id="menu">
+        <a href="index.html">Tableau de bord</a>
+        <a href="stock.html">Stock & articles</a>
+        <a href="commandes.html">Commandes</a>
+        <a href="achat.html">Nouvelle vente</a>
+        <a href="ventes.html">Ventes</a>
+        <a href="dettes.html">Dettes</a>
+      </nav>
+
+      <!-- Connexion / déconnexion de l'administrateur -->
+      <button class="admin-btn" id="adminBtn" type="button">🔐 Admin</button>
+    </header>
+
+    <div class="main">
+
+      <!-- ===== TITRE DE LA PAGE ===== -->
+      <div class="topbar">
+        <div>
+          <h1 id="pageTitle">Produits et stock</h1>
+          <p>Gestion de votre activité commerciale</p>
+        </div>
+        <div class="avatar">FA</div>
+      </div>
+
+      <!-- ===== CONTENU DE LA PAGE ===== -->
+      <main class="page">
+        <div class="section-title">
+          <h2>Produits et stock</h2>
+          <p>Consultez les quantités disponibles. L'administrateur peut ajouter, modifier et supprimer des articles.</p>
+        </div>
+
+        <!-- Message pour les visiteurs (masqué si l'administrateur est connecté) -->
+        <div class="card" data-public>
+          <h3>🔒 Espace administrateur</h3>
+          <p class="help">Seul l'administrateur peut ajouter ou modifier des articles.</p>
+          <button type="button" class="btn btn-primary" data-login-admin>Connexion administrateur</button>
+        </div>
+
+        <!-- Formulaire d'ajout / modification (visible seulement pour l'administrateur) -->
+        <div class="form-card admin-card" id="ajout" data-admin hidden>
+          <h3 id="formTitle">Ajouter un article</h3>
+          <form id="productForm">
+            <!-- Numéro du produit (rempli seulement en cas de modification) -->
+            <input type="hidden" id="productId">
+
+            <div class="form-grid">
+              <div class="field">
+                <label for="productName">Nom de l'article *</label>
+                <input id="productName" required placeholder="Ex. Samsung Galaxy A15">
+              </div>
+              <div class="field">
+                <label for="productCategory">Catégorie *</label>
+                <select id="productCategory"></select>
+              </div>
+              <div class="field">
+                <label for="productPrice">Prix de vente (F CFA) *</label>
+                <input id="productPrice" type="number" min="1" required>
+              </div>
+              <div class="field">
+                <label for="productStock">Quantité en stock *</label>
+                <input id="productStock" type="number" min="0" step="1" required>
+              </div>
+
+              <!-- Image de l'article : photo de l'appareil OU lien internet -->
+              <div class="field full">
+                <label for="productImageFile">Photo de l'article</label>
+                <div class="photo-zone">
+                  <input id="productImageFile" type="file" accept="image/*">
+                  <p class="help">Choisissez une photo depuis votre appareil, ou collez un lien d'image ci-dessous.
+                    Sans photo, une image de la catégorie sera affichée.</p>
+                  <input id="productImageUrl" type="url" placeholder="https://exemple.com/photo.jpg"
+                         style="margin-top:.6rem">
+                  <img id="imagePreview" class="photo-preview" alt="Aperçu de l'article">
+                </div>
+              </div>
+            </div>
+
+            <div class="actions" style="margin-top:1.1rem">
+              <button type="submit" class="btn btn-primary" id="productSubmit">Ajouter l'article</button>
+              <!-- Visible seulement en mode modification -->
+              <button type="button" class="btn btn-neutral" id="productCancel" hidden>Annuler</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Liste du stock (remplie par stock.js) -->
+        <div class="card">
+          <h3>Liste du stock</h3>
+          <input class="search" id="stockSearch" placeholder="Rechercher un produit...">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Produit</th>
+                  <th>Catégorie</th>
+                  <th>Prix</th>
+                  <th>Stock</th>
+                  <th data-admin hidden>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="stockTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Zone des petits messages (remplie par notifier() dans donnees.js) -->
+  <div id="notification" class="notice"></div>
+
+  <!-- Scripts : l'ordre est important (donnees.js en premier) -->
+  <script src="js/donnees.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/commun.js"></script>
+  <script src="js/stock.js"></script>
+</body>
+
+</html>

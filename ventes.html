@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <!-- Nécessaire pour que le site s'adapte aux téléphones et tablettes -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>FALOUAPPLE - Ventes</title>
+
+  <!-- Polices Google (si hors-ligne, le site utilise la police du système) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Feuille de style du site -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <div class="app">
+
+    <!-- ===== BARRE DE NAVIGATION (identique sur toutes les pages) ===== -->
+    <header class="navbar">
+
+      <!-- Logo -->
+      <div class="logo">
+        <div class="logo-icon">FA</div>
+        <div>
+          <h2>FALOUAPPLE</h2>
+          <small>GESTION</small>
+        </div>
+      </div>
+
+      <!-- Bouton hamburger (visible seulement sur téléphone) -->
+      <button class="menu-toggle" id="menuToggle" type="button"
+              aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="menu">☰</button>
+
+      <!-- Liens du menu -->
+      <nav class="menu" id="menu">
+        <a href="index.html">Tableau de bord</a>
+        <a href="stock.html">Stock & articles</a>
+        <a href="commandes.html">Commandes</a>
+        <a href="achat.html">Nouvelle vente</a>
+        <a href="ventes.html">Ventes</a>
+        <a href="dettes.html">Dettes</a>
+      </nav>
+
+      <!-- Connexion / déconnexion de l'administrateur -->
+      <button class="admin-btn" id="adminBtn" type="button">🔐 Admin</button>
+    </header>
+
+    <div class="main">
+
+      <!-- ===== TITRE DE LA PAGE ===== -->
+      <div class="topbar">
+        <div>
+          <h1 id="pageTitle">Ventes</h1>
+          <p>Gestion de votre activité commerciale</p>
+        </div>
+        <div class="avatar">FA</div>
+      </div>
+
+      <!-- ===== CONTENU DE LA PAGE ===== -->
+      <main class="page">
+        <div class="section-title">
+          <h2>Ventes enregistrées</h2>
+          <p>Retrouvez les achats, les paiements et les soldes restants.</p>
+        </div>
+
+        <div class="card">
+          <input class="search" id="salesSearch" placeholder="Rechercher une vente...">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Référence</th>
+                  <th>Client</th>
+                  <th>Produit</th>
+                  <th>Total</th>
+                  <th>Payé</th>
+                  <th>Reste</th>
+                  <th>Paiement</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <!-- Lignes remplies par ventes.js -->
+              <tbody id="salesTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Zone des petits messages (remplie par notifier() dans donnees.js) -->
+  <div id="notification" class="notice"></div>
+
+  <!-- Scripts : l'ordre est important (donnees.js en premier) -->
+  <script src="js/donnees.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/commun.js"></script>
+  <script src="js/ventes.js"></script>
+</body>
+
+</html>

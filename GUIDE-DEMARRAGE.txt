@@ -1,0 +1,32 @@
+FALOUAPPLE — VERSION SIMPLIFIÉE
+
+FONCTIONNALITÉS CONSERVÉES
+- Tableau de bord
+- Gestion du stock et ajout/modification d’articles
+- Enregistrement et suivi des commandes clients
+- Enregistrement des ventes et impression des reçus
+- Gestion des dettes et remboursements
+
+PAIEMENT WAVE / ORANGE MONEY
+Numéro de réception : 780128084
+Dans une vente, choisissez Wave ou Orange Money. Les instructions de paiement s’affichent. Le client effectue le transfert dans son application, puis l’administrateur vérifie la réception dans son compte avant de confirmer la vente.
+
+IMPORTANT : cette version n’intègre pas encore une passerelle de paiement automatique. Pour encaisser automatiquement depuis le site et recevoir une confirmation serveur, il faut un compte marchand éligible, les identifiants/API officiels Wave et/ou Orange Money, ainsi qu’un backend HTTPS. Ne partagez jamais les clés secrètes dans le JavaScript du navigateur.
+
+INSTALLATION LOCALE
+1. Décompressez l’archive.
+2. Ouvrez le dossier FalouApple dans VS Code.
+3. Lancez index.html avec Live Server.
+4. Le code administrateur local actuel est 1234 (à remplacer avant toute mise en production).
+
+Les données locales sont enregistrées dans le navigateur. Pour plusieurs appareils ou utilisateurs, déployez et connectez le backend PHP/MySQL fourni.
+
+
+MISE EN SERVICE MYSQL
+1. Installez XAMPP (Apache + PHP + MySQL) ou un hébergement PHP/MySQL.
+2. Importez backend/schema.sql dans phpMyAdmin.
+3. Copiez backend/config.example.php vers backend/config.php et saisissez les identifiants de la base.
+4. Pour un test local HTTP, réglez cookie_secure à false dans config.php. En production HTTPS, laissez true.
+5. Créez le premier administrateur via la procédure décrite dans backend/README.md, puis supprimez backend/create_admin.php.
+6. Ouvrez le site via http://localhost/FalouApple/ (pas en ouvrant directement index.html ni avec Live Server).
+7. Connectez-vous : les données seront chargées et enregistrées dans MySQL.

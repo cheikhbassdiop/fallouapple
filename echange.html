@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <!-- Nécessaire pour que le site s'adapte aux téléphones et tablettes -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>FALOUAPPLE - Nouvel échange</title>
+
+  <!-- Polices Google (si hors-ligne, le site utilise la police du système) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Feuille de style du site -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <div class="app">
+
+    <!-- ===== BARRE DE NAVIGATION (identique sur toutes les pages) ===== -->
+    <header class="navbar">
+
+      <!-- Logo -->
+      <div class="logo">
+        <div class="logo-icon">FA</div>
+        <div>
+          <h2>FALOUAPPLE</h2>
+          <small>GESTION</small>
+        </div>
+      </div>
+
+      <!-- Bouton hamburger (visible seulement sur téléphone) -->
+      <button class="menu-toggle" id="menuToggle" type="button"
+              aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="menu">☰</button>
+
+      <!-- Liens du menu -->
+      <nav class="menu" id="menu">
+        <a href="index.html">Tableau de bord</a>
+        <a href="stock.html">Stock & articles</a>
+        <a href="commandes.html">Commandes</a>
+        <a href="achat.html">Nouvelle vente</a>
+        <a href="ventes.html">Ventes</a>
+        <a href="dettes.html">Dettes</a>
+      </nav>
+
+      <!-- Connexion / déconnexion de l'administrateur -->
+      <button class="admin-btn" id="adminBtn" type="button">🔐 Admin</button>
+    </header>
+
+    <div class="main">
+
+      <!-- ===== TITRE DE LA PAGE ===== -->
+      <div class="topbar">
+        <div>
+          <h1 id="pageTitle">Nouvel échange</h1>
+          <p>Gestion de votre activité commerciale</p>
+        </div>
+        <div class="avatar">FA</div>
+      </div>
+
+      <!-- ===== CONTENU DE LA PAGE ===== -->
+      <main class="page">
+        <a class="btn btn-neutral back" href="index.html">← Retour aux produits</a>
+
+        <div class="section-title">
+          <h2>🔄 Effectuer un échange</h2>
+          <p>Saisissez le nouveau produit souhaité et les informations de l'ancien produit remis.</p>
+        </div>
+
+        <div class="form-card">
+          <form id="exchangeForm">
+            <div class="form-grid">
+
+              <!-- Nouveau produit et client -->
+              <div class="field full">
+                <label for="exchangeProduct">Nouveau produit souhaité *</label>
+                <select id="exchangeProduct" required></select>
+              </div>
+              <div class="field">
+                <label for="exchangeClient">Nom du client *</label>
+                <input id="exchangeClient" required>
+              </div>
+              <div class="field">
+                <label for="exchangePhone">Téléphone du client *</label>
+                <input id="exchangePhone" type="tel" required>
+              </div>
+              <div class="field">
+                <label for="exchangeQty">Quantité du nouveau produit *</label>
+                <input id="exchangeQty" type="number" min="1" value="1" required>
+              </div>
+              <div class="field">
+                <label for="exchangePrice">Prix unitaire (F CFA) *</label>
+                <input id="exchangePrice" type="number" min="1" required>
+              </div>
+
+              <!-- Photo de l'ancien produit (obligatoire) -->
+              <div class="field full">
+                <label for="exchangePhoto">Photo de l'ancien produit à échanger *</label>
+                <div class="photo-zone">
+                  <input id="exchangePhoto" type="file" accept="image/*" required>
+                  <p class="help">Choisissez une photo depuis votre appareil. Elle sera conservée avec l'opération.</p>
+                  <img id="photoPreview" class="photo-preview" alt="Aperçu de l'ancien produit">
+                </div>
+              </div>
+
+              <!-- Informations sur l'ancien produit -->
+              <div class="field">
+                <label for="oldCategory">Type d'ancien produit *</label>
+                <select id="oldCategory">
+                  <option>Téléphone</option>
+                  <option>Vélo</option>
+                  <option>Scooter</option>
+                  <option>Accessoire</option>
+                  <option>Autre</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="oldName">Marque et modèle de l'ancien produit *</label>
+                <input id="oldName" required placeholder="Ex. iPhone 11">
+              </div>
+              <div class="field">
+                <label for="oldCondition">État de l'ancien produit *</label>
+                <select id="oldCondition">
+                  <option>Très bon état</option>
+                  <option>Bon état</option>
+                  <option>État moyen</option>
+                  <option>Abîmé</option>
+                  <option>En panne</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="tradeValue">Valeur de reprise (F CFA) *</label>
+                <input id="tradeValue" type="number" min="0" value="0" required>
+              </div>
+              <div class="field full">
+                <label for="oldDescription">Description ou défauts constatés</label>
+                <textarea id="oldDescription" placeholder="Ex. écran fissuré, batterie faible..."></textarea>
+              </div>
+              <div class="field">
+                <label for="exchangePaid">Montant versé (F CFA) *</label>
+                <input id="exchangePaid" type="number" min="0" value="0" required>
+              </div>
+            </div>
+
+            <!-- Résumé calculé automatiquement par echange.js -->
+            <div class="summary">
+              Prix du nouveau produit : <strong id="exchangeTotal">0 F CFA</strong><br>
+              Valeur de reprise : <strong id="exchangeTrade">0 F CFA</strong><br>
+              Complément à payer : <strong id="exchangeDifference">0 F CFA</strong><br>
+              Reste dû : <strong id="exchangeDue">0 F CFA</strong>
+            </div>
+
+            <div class="actions" style="margin-top:1.25rem">
+              <button class="btn btn-secondary">Confirmer l'échange</button>
+            </div>
+          </form>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Zone des petits messages (remplie par notifier() dans donnees.js) -->
+  <div id="notification" class="notice"></div>
+
+  <!-- Scripts : l'ordre est important (donnees.js en premier) -->
+  <script src="js/donnees.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/commun.js"></script>
+  <script src="js/echange.js"></script>
+</body>
+
+</html>

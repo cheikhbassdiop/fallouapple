@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <!-- Nécessaire pour que le site s'adapte aux téléphones et tablettes -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>FALOUAPPLE - Nouvelle vente</title>
+
+  <!-- Polices Google (si hors-ligne, le site utilise la police du système) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Feuille de style du site -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <div class="app">
+
+    <!-- ===== BARRE DE NAVIGATION (identique sur toutes les pages) ===== -->
+    <header class="navbar">
+
+      <!-- Logo -->
+      <div class="logo">
+        <div class="logo-icon">FA</div>
+        <div>
+          <h2>FALOUAPPLE</h2>
+          <small>GESTION</small>
+        </div>
+      </div>
+
+      <!-- Bouton hamburger (visible seulement sur téléphone) -->
+      <button class="menu-toggle" id="menuToggle" type="button"
+              aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="menu">☰</button>
+
+      <!-- Liens du menu -->
+      <nav class="menu" id="menu">
+        <a href="index.html">Tableau de bord</a>
+        <a href="stock.html">Stock & articles</a>
+        <a href="commandes.html">Commandes</a>
+        <a href="achat.html">Nouvelle vente</a>
+        <a href="ventes.html">Ventes</a>
+        <a href="dettes.html">Dettes</a>
+      </nav>
+
+      <!-- Connexion / déconnexion de l'administrateur -->
+      <button class="admin-btn" id="adminBtn" type="button">🔐 Admin</button>
+    </header>
+
+    <div class="main">
+
+      <!-- ===== TITRE DE LA PAGE ===== -->
+      <div class="topbar">
+        <div>
+          <h1 id="pageTitle">Nouvelle vente</h1>
+          <p>Gestion de votre activité commerciale</p>
+        </div>
+        <div class="avatar">FA</div>
+      </div>
+
+      <!-- ===== CONTENU DE LA PAGE ===== -->
+      <main class="page">
+        <a class="btn btn-neutral back" href="index.html">← Retour aux produits</a>
+
+        <div class="section-title">
+          <h2>🛒 Enregistrer une vente</h2>
+          <p>Renseignez les informations du client, du produit et du paiement.</p>
+        </div>
+
+        <div class="form-card">
+          <form id="purchaseForm">
+            <div class="form-grid">
+              <div class="field full">
+                <label for="purchaseProduct">Produit *</label>
+                <select id="purchaseProduct" required></select>
+              </div>
+              <div class="field">
+                <label for="purchaseClient">Nom du client *</label>
+                <input id="purchaseClient" required>
+              </div>
+              <div class="field">
+                <label for="purchasePhone">Téléphone</label>
+                <input id="purchasePhone" type="tel">
+              </div>
+              <div class="field">
+                <label for="purchaseQty">Quantité *</label>
+                <input id="purchaseQty" type="number" min="1" value="1" required>
+              </div>
+              <div class="field">
+                <label for="purchasePrice">Prix unitaire (F CFA) *</label>
+                <input id="purchasePrice" type="number" min="1" required>
+              </div>
+              <div class="field">
+                <label for="purchaseMethod">Mode de paiement</label>
+                <select id="purchaseMethod">
+                  <option>Espèces</option>
+                  <option>Wave</option>
+                  <option>Orange Money</option>
+                  <option>Virement</option>
+                  <option>Paiement partiel / crédit</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="purchasePaid">Montant versé (F CFA) *</label>
+                <input id="purchasePaid" type="number" min="0" value="0" required>
+              </div>
+            </div>
+
+            <!-- Résumé calculé automatiquement par achat.js -->
+            <div class="payment-info" id="onlinePaymentInfo">
+              <strong>Paiement Wave / Orange Money</strong>
+              <p>Envoyez le montant au numéro <strong>780 128 084</strong> via Wave ou Orange Money, puis vérifiez la réception avant de confirmer la vente.</p>
+              <div class="payment-actions"><button type="button" class="btn btn-neutral btn-small" id="copyPaymentNumber">Copier le numéro</button><span class="help">Le paiement n'est pas automatisé : la confirmation doit être vérifiée dans votre compte marchand.</span></div>
+            </div>
+
+            <div class="summary">
+              Montant total : <strong id="purchaseTotal">0 F CFA</strong><br>
+              Reste à payer : <strong id="purchaseDue">0 F CFA</strong>
+            </div>
+
+            <div class="actions" style="margin-top:1.25rem">
+              <button class="btn btn-primary">Confirmer la vente</button>
+            </div>
+          </form>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Zone des petits messages (remplie par notifier() dans donnees.js) -->
+  <div id="notification" class="notice"></div>
+
+  <!-- Scripts : l'ordre est important (donnees.js en premier) -->
+  <script src="js/donnees.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/commun.js"></script>
+  <script src="js/achat.js"></script>
+  <script src="js/paiement.js"></script>
+</body>
+
+</html>

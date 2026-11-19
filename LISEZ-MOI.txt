@@ -1,0 +1,30 @@
+FALOUAPPLE / IDEAL — VERSION 9.0
+================================
+
+CONTENU CUMULATIF V5 À V9
+- V5 : tableau de bord avec CA, encaissements, marge estimée, valeur du stock et graphique des 7 derniers jours.
+- V6 : répertoire fournisseurs et saisie des approvisionnements (stock et coût unitaire actualisés).
+- V7 : impression de factures / reçus depuis la liste des ventes.
+- V8 : socle backend PHP 8.1+ / MySQL, schéma SQL et endpoints API.
+- V9 : utilisateurs, rôles admin/manager/seller, sessions serveur et création initiale d'un administrateur.
+
+LANCEMENT LOCAL
+1. Décompresser l'archive.
+2. Ouvrir le dossier dans VS Code et lancer index.html avec Live Server.
+3. Le mode local conserve les données dans le navigateur. Exportez régulièrement un JSON depuis Historique.
+4. Le mode local est destiné à la démonstration et aux tests, pas à la gestion multi-utilisateur sécurisée.
+
+FOURNISSEURS
+L'ajout de fournisseurs est disponible. La validation d'un approvisionnement et la suppression d'un fournisseur requièrent le mode administrateur. Renseignez le coût d'achat lors d'un approvisionnement pour obtenir une marge estimée pertinente sur les ventes suivantes.
+
+FACTURES
+Dans Ventes, cliquez sur Imprimer pour générer un reçu imprimable. Le nom commercial, l'adresse, le NINEA et les coordonnées sont à personnaliser dans js/commun.js si nécessaire.
+
+BACKEND
+Consultez backend/README.md. Importez backend/schema.sql, configurez backend/config.php à partir de config.example.php, créez le premier administrateur puis supprimez create_admin.php. Le backend constitue un socle fonctionnel pour l'authentification et la gestion des produits ; les pages front-end ne sont pas encore toutes raccordées à l'API.
+
+SÉCURITÉ ET LIMITES
+- Le code PIN administrateur du mode local reste visible dans le navigateur : ne l'utilisez pas comme sécurité de production.
+- Les données du mode local ne sont pas synchronisées entre appareils.
+- Les marges historiques ne sont exactes que pour les ventes ayant un coût unitaire renseigné.
+- Testez sur une copie et exportez les données avant toute utilisation réelle.
